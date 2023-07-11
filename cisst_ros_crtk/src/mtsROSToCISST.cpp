@@ -74,6 +74,24 @@ void mtsROSToCISST(const crtk_msgs::CartesianImpedance & rosData, prmCartesianIm
                   cisstData.OrientationNegative);
 }
 
+void mtsROSToCISST(const crtk_msgs::CartesianState & rosData, prmStateCartesian & cisstData)
+{
+    mtsROSPoseToCISST(rosData.Pose, cisstData.Position());
+    cisstData.PositionIsDefined() = rosData.PoseIsDefined.data;
+
+    vctFixedSizeVector<double, 6>
+        vctVelocity(rosData.Twist.linear.x, rosData.Twist.linear.y, rosData.Twist.linear.z,
+              rosData.Twist.angular.x, rosData.Twist.angular.y, rosData.Twist.angular.z);
+    cisstData.SetVelocity(vctVelocity);
+    cisstData.VelocityIsDefined() = rosData.TwistIsDefined.data;
+
+    vctFixedSizeVector<double, 6>
+        vctEffort(rosData.Wrench.force.x, rosData.Wrench.force.y, rosData.Wrench.force.z,
+              rosData.Wrench.torque.x, rosData.Wrench.torque.y, rosData.Wrench.torque.z);
+    cisstData.SetEffort(vctEffort);
+    cisstData.EffortIsDefined() = rosData.WrenchIsDefined.data;
+}
+
 void mtsROSToCISST(const crtk_msgs::QueryForwardKinematics::Request & rosData,
                    prmForwardKinematicsRequest & cisstData)
 {

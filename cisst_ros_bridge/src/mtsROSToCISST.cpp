@@ -368,4 +368,3 @@ void mtsROSToCISST(const cisst_msgs::ConvertFloat64Array::Request & rosData,
     std::copy(rosData.input.begin(), rosData.input.end(),
               cisstData.begin());
 }
-

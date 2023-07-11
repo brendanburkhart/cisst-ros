@@ -54,6 +54,19 @@ void mtsCISSTToROS(const prmOperatingState & cisstData,
     mtsCISSTToROSOperatingState(cisstData, rosData.operating_state, debugInfo);
 }
 
+void mtsCISSTToROS(const prmStateCartesian & cisstData, crtk_msgs::CartesianState & rosData,
+                   const std::string &)
+{
+    mtsCISSTToROSPose(cisstData.Position(), rosData.Pose);
+    rosData.PoseIsDefined.data = cisstData.PositionIsDefined();
+
+    mtsCISSTToROSTwist(cisstData.Velocity(), rosData.Twist);
+    rosData.TwistIsDefined.data = cisstData.VelocityIsDefined();
+
+    mtsCISSTToROSWrench(cisstData.Effort(), rosData.Wrench);
+    rosData.WrenchIsDefined.data = cisstData.EffortIsDefined();
+}
+
 void mtsCISSTToROS(const prmForwardKinematicsResponse & cisstData,
                    crtk_msgs::QueryForwardKinematics::Response & rosData,
                    const std::string &)
