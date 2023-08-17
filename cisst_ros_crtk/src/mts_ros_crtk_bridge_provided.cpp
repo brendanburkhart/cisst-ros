@@ -312,6 +312,9 @@ void mts_ros_crtk_bridge_provided::bridge_interface_provided(const std::string &
             } else if (_crtk_command == "servo_cf") {
                 m_subscribers_bridge->AddSubscriberToCommandWrite<prmForceCartesianSet, geometry_msgs::WrenchStamped>
                     (_required_interface_name, _command, _ros_topic);
+            }  else if (_crtk_command == "servo_cpvf") {
+                m_subscribers_bridge->AddSubscriberToCommandWrite<prmStateCartesian, crtk_msgs::CartesianState>
+                    (_required_interface_name, _command, _ros_topic);
             } else if (_crtk_command == "state_command") {
                 m_subscribers_bridge->AddSubscriberToCommandWrite<std::string, crtk_msgs::StringStamped>
                     (_required_interface_name, _command, _ros_topic);
