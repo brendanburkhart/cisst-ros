@@ -376,6 +376,11 @@ void mts_ros_crtk_bridge_provided::bridge_interface_provided(const std::string &
                 cisst_ros_crtk::clean_namespace(_namespace);
                 m_stats_bridge->AddIntervalStatisticsPublisher("stats/" + _namespace,
                                                                _component_name, _interface_name);
+            } else if (_crtk_command == "contact") {
+                std::string _namespace = _component_name + "_" + _interface_name;
+                std::transform(_namespace.begin(), _namespace.end(), _namespace.begin(), tolower);
+                cisst_ros_crtk::clean_namespace(_namespace);
+                _pub_bridge->AddPublisherFromCommandRead<bool, std_msgs::Bool>(_interface_name, _command, _ros_topic);
             }
         }
     }
